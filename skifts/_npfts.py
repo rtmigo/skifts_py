@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: (c) 2022 Artёm IG <github.com/rtmigo>
 # SPDX-License-Identifier: MIT
 
-from typing import List
+from typing import List, Iterable
 
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -31,7 +31,7 @@ class SkiFts:
             preprocessor=lambda x: x)
         self._docs_tfidf = self._vectorizer.fit_transform(corpus)
 
-    def search(self, query: List[str]) -> List[int]:
+    def search(self, query: List[str]) -> Iterable[int]:
         """Finds all documents containing at least one word from `query`.
         Returns list of indexes of these documents, starting from most
         relevant."""
@@ -64,14 +64,10 @@ class SkiFts:
         # от больших к меньшим, а нули (нерелевантные документы) в конце
         matrix = _Array2D.reverse_rows(matrix)
 
-        result: List[int] = []
         for score, doc_idx in matrix.transpose():
             if score <= 0:
-                # значения score убывают - дальше будут только нули
+                # значения score убывают - дальше будут только нули.
+                # Может эффективне было удалить нули на уровне numpy? Не уверен
                 assert score == 0
                 break
-            result.append(int(doc_idx))
-
-        # может лучше было удалить нули на уровне numpy? Не уверен
-
-        return result
+            yield int(doc_idx)
