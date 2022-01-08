@@ -6,7 +6,7 @@ import unittest
 
 from typing import List
 
-from skifts._npfts import SkFts
+from skifts._npfts import SkiFts
 
 _mr_postman = """
     "Please Mr. Postman" is a song written 
@@ -64,7 +64,7 @@ def _postman_corpus():
 class TestFts(unittest.TestCase):
 
     def createFts(self, corpus):
-        return SkFts(corpus)
+        return SkiFts(corpus)
 
     def test(self):
         corpus = _postman_corpus()
