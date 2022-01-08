@@ -76,7 +76,7 @@ class TestFts(unittest.TestCase):
             return corpus[idx]
 
         def best_match(query):
-            return idx_to_doc(db.search(query)[0])
+            return idx_to_doc(list(db.search(query))[0])
 
         self.assertEqual(
             best_match(['yeah']),
@@ -99,7 +99,7 @@ class TestFts(unittest.TestCase):
             ['wait', 'mister', 'postman'])
 
         self.assertEqual(
-             len(db.search(['jabberwocky'])), 0)
+             len(list(db.search(['jabberwocky']))), 0)
 
     @unittest.skip
     def test_empty_query(self):
