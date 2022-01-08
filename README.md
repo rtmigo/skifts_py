@@ -1,4 +1,4 @@
-# [skfts](https://github.com/rtmigo/skfts_py#readme)
+# [skifts](https://github.com/rtmigo/skifts_py#readme)
 
 Searches for the most relevant documents containing words from a query. Uses
 Scikit-learn and Numpy

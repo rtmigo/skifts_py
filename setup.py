@@ -12,7 +12,7 @@ def load_module_dict(filename: str) -> dict:
     return module.__dict__
 
 
-name = "skfts"
+name = "skifts"
 
 setup(
     name=name,
@@ -23,7 +23,7 @@ setup(
 
     python_requires='>=3.7',  # 3.7 needed for dataclasses
     install_requires=["scikit-learn"],
-    packages=['skfts'],
+    packages=['skifts'],
 
     description="",
 
