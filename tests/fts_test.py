@@ -6,7 +6,7 @@ import unittest
 
 from typing import List
 
-from skfts._npfts import SkFts
+from skifts._npfts import SkFts
 
 _mr_postman = """
     "Please Mr. Postman" is a song written 
