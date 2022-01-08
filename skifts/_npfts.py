@@ -8,7 +8,17 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-class SkFts:
+class _Array2D:
+    @staticmethod
+    def sort_by_first_row(matrix: np.ndarray) -> np.ndarray:
+        return matrix[:, matrix[0, :].argsort()]
+
+    @staticmethod
+    def reverse_rows(matrix: np.ndarray) -> np.ndarray:
+        return matrix[:, ::-1]
+
+
+class SkiFts:
     # https://stackoverflow.com/a/55682395
     def __init__(self, corpus: List[List[str]]):
         self._docs_count = len(corpus)
@@ -22,6 +32,10 @@ class SkFts:
         self._docs_tfidf = self._vectorizer.fit_transform(corpus)
 
     def search(self, query: List[str]) -> List[int]:
+        """Finds all documents containing at least one word from `query`.
+        Returns list of indexes of these documents, starting from most
+        relevant."""
+
         query_tfidf = self._vectorizer.transform([query])
         scores = cosine_similarity(query_tfidf, self._docs_tfidf).flatten()
         assert self._docs_count == scores.shape[0]
@@ -33,16 +47,22 @@ class SkFts:
         n = scores.shape[0]
         indexes = np.arange(0, n, 1)
         assert indexes.shape[0] == scores.shape[0]
-        matrix = np.vstack([scores, indexes])
+        assert len(indexes.shape) == 1
 
-        # Сортируем двумерный массив по значению первой строки. При этом
-        # меняются обе строки: в первой будет возрастающий список
-        # релевантностей, а во второй переупорядоченные индексы документов
-        matrix = matrix[:, matrix[0, :].argsort()]
+        matrix = np.vstack([scores, indexes])
+        assert len(matrix.shape) == 2
+        assert matrix.shape[0] == 2
+        assert matrix.shape[1] == n
+
+        # Сортируем двумерный массив по значению первой строки. Элементы
+        # обеих строк будут перемещаться. В итоге в первой будет возрастающий
+        # список релевантностей, а во второй переупорядоченные индексы
+        # документов
+        matrix = _Array2D.sort_by_first_row(matrix)
 
         # Переворачиваем массив наоборот, чтобы значения релевантности шли
         # от больших к меньшим, а нули (нерелевантные документы) в конце
-        matrix = matrix[:, ::-1]
+        matrix = _Array2D.reverse_rows(matrix)
 
         result: List[int] = []
         for score, doc_idx in matrix.transpose():
