@@ -6,7 +6,7 @@ import unittest
 
 from typing import List
 
-from npfts._npfts import Finder
+from npfts._npfts import SkFts
 
 _mr_postman = """
     "Please Mr. Postman" is a song written 
@@ -59,43 +59,47 @@ def _words(text: str) -> List[str]:
     return [w.lower() for w in re.findall(r'\w+', text)]
 
 def _postman_corpus():
-    return [line.strip().split() for line in _mr_postman.splitlines()]
+    return [_words(line) for line in _mr_postman.splitlines()]
 
 class TestFts(unittest.TestCase):
 
     def createFts(self, corpus):
-        return Finder(corpus)
+        return SkFts(corpus)
 
     def test(self):
-        print(_postman_corpus())
-        db = self.createFts(_postman_corpus())
+        corpus = _postman_corpus()
+
+        db = self.createFts(corpus)
 
 
+        def idx_to_doc(idx):
+            return corpus[idx]
 
-
-
-        self.assertEqual(
-            db.search(['wait'])[0],
-            '(Wait)')
-
-        self.assertEqual(
-            db.search(['minute'])[0],
-            'Wait a minute')
+        def best_match(query):
+            return idx_to_doc(db.search(query)[0])
 
         self.assertEqual(
-            db.search(['yeah'])[0],
-            '(Oh yeah)')
+            best_match(['yeah']),
+            ['oh', 'yeah'])
 
         self.assertEqual(
-            db.search(['please', 'postman'])[0],
-            "(Please, Please Mister Postman)")
+            best_match(['wait']),
+            ['wait'])
 
         self.assertEqual(
-            db.search(['wait', 'postman'])[0],
-            "Wait Mister Postman")
+            best_match(['minute']),
+            ['wait', 'a', 'minute'])
 
         self.assertEqual(
-            len(db.search(['jabberwocky'])), 0)
+            best_match(['please', 'postman']),
+            ['please', 'please', 'mister', 'postman'])
+
+        self.assertEqual(
+            best_match(['wait', 'postman']),
+            ['wait', 'mister', 'postman'])
+
+        self.assertEqual(
+             len(db.search(['jabberwocky'])), 0)
 
     @unittest.skip
     def test_empty_query(self):
