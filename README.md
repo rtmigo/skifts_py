@@ -1,3 +1,6 @@
+[![Generic badge](https://img.shields.io/badge/Python-3.6+-blue.svg)](#)
+[![Generic badge](https://img.shields.io/badge/OS-Linux%20|%20macOS%20|%20Windows-blue.svg)](#)
+
 # [skifts](https://github.com/rtmigo/skifts_py#readme)
 
 Searches for the most relevant documents containing words from a query.
