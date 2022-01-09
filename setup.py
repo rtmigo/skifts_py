@@ -25,7 +25,8 @@ setup(
     install_requires=["scikit-learn"],
     packages=['skifts'],
 
-    description="",
+    description="Search for the most relevant documents containing words "
+                "from a query",
 
     keywords="".split(),
 
@@ -37,6 +38,7 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
+        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
