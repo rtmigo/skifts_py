@@ -5,7 +5,7 @@ import re
 import unittest
 from typing import List
 
-from skifts._npfts import SkiFts
+from skifts._fts import SkiFts
 
 _mr_postman = """
     "Please Mr. Postman" is a song written 
@@ -67,7 +67,7 @@ class TestFts(unittest.TestCase):
     def createFts(self, corpus):
         return SkiFts(corpus)
 
-    def test(self):
+    def test_postman(self):
         corpus = _postman_corpus()
 
         db = self.createFts(corpus)
@@ -160,38 +160,20 @@ class TestFts(unittest.TestCase):
         # всего два совпадения, но приоритетное слово
         self.assertEqual(corpus[r[0]], ['2', '3', '5'])
 
-    @unittest.skip
     def test_word_popularity(self):
-        db = self.createFts()
-        for doc in [
-            [1, 2],
-            [1, 3],
-            [7, 5],
-            [1, 4],
-            [9, 8]
-        ]:
-            db.add(doc_id=str(doc), words=doc)
+        corpus = [
+            ['1', '2'],
+            ['1', '3'],
+            ['7', '5'],
+            ['1', '4'],
+            ['9', '8']
+        ]
+        db = self.createFts(corpus)
 
         # не будет ни одного полного совпадения, но первым найдется
         # совпадение с редкой пятеркой
 
-        q = [1, 5]
+        q = ['1', '5']
         r = db.search(q)
         self.assertEqual(len(r), 4)
-        self.assertEqual(r[0], '[7, 5]')
-
-    @unittest.skip
-    def test_not_unique_id(self):
-        fts = self.createFts()
-        fts.add(['a', 'b', 'c'], doc_id='id1')
-        with self.assertRaises(ValueError):
-            fts.add(['d', 'e', 'f'], doc_id='id1')
-
-    @unittest.skip
-    def test_not_passing_id(self):
-        fts = self.createFts()
-        ids = set()
-        ids.add(fts.add(['a', 'b', 'c']))
-        ids.add(fts.add(['d', 'e']))
-        ids.add(fts.add(['f', 'g']))
-        self.assertEqual(len(ids), 3)
+        self.assertEqual(corpus[r[0]], ['7', '5'])

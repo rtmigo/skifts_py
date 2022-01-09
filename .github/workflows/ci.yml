@@ -56,7 +56,7 @@ jobs:
           python ./test_pkg.py
 
   to-staging:
-    needs: test
+    needs: test_postman
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -72,7 +72,7 @@ jobs:
     # to "master" branch and create GitHub release
 
     if: github.event.head_commit.message=='publish'
-    needs: [ test ]
+    needs: [ test_postman ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
