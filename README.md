@@ -35,7 +35,7 @@ documents = [
     ["wait", "mister", "postman"],
     ["please", "mister", "postman", "look", "and", "see"],
     ["oh", "yes", "wait", "a", "minute", "mister", "postman"]
-] 
+]
 
 fts = SkiFts(documents)
 
@@ -46,6 +46,11 @@ for doc_index in fts.search(['postman', 'wait']):
 
 ## Implementation details
 
-The search uses the [scikit-learn](https://scikit-learn.org) library, which 
+The search uses the [scikit-learn](https://scikit-learn.org) library, which
 ranks documents using [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) and
 [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
+
+## See also
+
+The [gifts](https://github.com/rtmigo/gifts_py) package implements the same
+algorithm, but in pure Python with no binary dependencies.
