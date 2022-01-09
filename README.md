@@ -3,24 +3,22 @@
 
 # [skifts](https://github.com/rtmigo/skifts_py#readme)
 
-Searches for the most relevant documents containing words from a query.
+Searches for the most relevant **elements** (documents) containing 
+**features** (words) that match features in the query.
 
 ```python3
 query = ['A', 'B']
 
 documents = [
-    ['N', 'A', 'M'],  # words from query: 'A'
-    ['C', 'B', 'A'],  # words from query: 'A', 'B'  
-    ['X', 'Y']  # no words from query
+    ['N', 'A', 'M'],  # matching features: 'A'
+    ['C', 'B', 'A'],  # matching features: 'A', 'B'  
+    ['X', 'Y']  # no matching features
 ]
 ```
 
 In this case, the search with return `['C', 'B', 'A']` and `['N', 'A',
 'M']` in that particular order.
 
-In fact, this is not a text search, but a **search for elements** (documents)
-with features (words) **that match the features in the query**. Strings are
-feature identifiers.
 
 ## Install
 
