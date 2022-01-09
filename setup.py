@@ -16,12 +16,12 @@ name = "skifts"
 
 setup(
     name=name,
-    version='0.2.1',
+    version='0.1.0',
     author="Artёm IG",
     author_email="ortemeo@gmail.com",
     url='https://github.com/rtmigo/gifts_py#readme',
 
-    python_requires='>=3.7',  # 3.7 needed for dataclasses
+    python_requires='>=3.6',
     install_requires=["scikit-learn"],
     packages=['skifts'],
 
