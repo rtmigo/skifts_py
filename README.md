@@ -1,8 +1,9 @@
+[![Generic badge](https://img.shields.io/badge/Python-3.6+-blue.svg)](#)
+[![Generic badge](https://img.shields.io/badge/OS-Linux%20|%20macOS%20|%20Windows-blue.svg)](#)
+
 # [skifts](https://github.com/rtmigo/skifts_py#readme)
 
 Searches for the most relevant documents containing words from a query.
-
-For example:
 
 ```python3
 query = ['A', 'B']
@@ -43,6 +44,13 @@ fts = SkiFts(documents)
 for doc_index in fts.search(['postman', 'wait']):
     print(documents[doc_index])
 ```
+
+Words inside the `documents` list are considered ready-made feature identifiers.
+If your text needs preprocessing or stemming, this should be done separately.
+
+The ranking takes into account the frequency of words in the document and the
+rarity of words in the corpus. The word order in the document and the distance
+between words do not matter.
 
 ## Implementation details
 
