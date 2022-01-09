@@ -9,14 +9,18 @@ Searches for the most relevant documents containing words from a query.
 query = ['A', 'B']
 
 documents = [
-    ['N', 'A', 'M'],  # common features: 'A'
-    ['C', 'B', 'A'],  # common features: 'A', 'B'  
-    ['X', 'Y']  # no common features
+    ['N', 'A', 'M'],  # words from query: 'A'
+    ['C', 'B', 'A'],  # words from query: 'A', 'B'  
+    ['X', 'Y']  # no words from query
 ]
 ```
 
 In this case, the search with return `['C', 'B', 'A']` and `['N', 'A',
 'M']` in that particular order.
+
+In fact, this is not a text search, but a **search for elements** (documents)
+with features (words) **that match the features in the query**. Strings are
+feature identifiers.
 
 ## Install
 
