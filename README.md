@@ -5,8 +5,6 @@
 
 Searches for the most relevant documents containing words from a query.
 
-For example:
-
 ```python3
 query = ['A', 'B']
 
@@ -46,6 +44,11 @@ fts = SkiFts(documents)
 for doc_index in fts.search(['postman', 'wait']):
     print(documents[doc_index])
 ```
+
+Words inside the `documents` list are considered ready-made feature identifiers.
+
+If your text needs preprocessing or stemming, this should be done separately.
+
 
 ## Implementation details
 
