@@ -15,8 +15,8 @@ documents = [
 ]
 ```
 
-In this case, the search with return `['C', 'B', 'A']` and `['N', 'A',
-'M']` in that particular order.
+The search with return `['C', 'B', 'A']` and `['N', 'A', 'M']` in that 
+particular order.
 
 It's not necessarily about text. Words are just any `str` instances. 
 Documents are unordered collections of those `str`. We search for documents
