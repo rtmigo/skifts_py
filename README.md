@@ -46,7 +46,6 @@ for doc_index in fts.search(['postman', 'wait']):
 ```
 
 Words inside the `documents` list are considered ready-made feature identifiers.
-
 If your text needs preprocessing or stemming, this should be done separately.
 
 
