@@ -1,21 +1,12 @@
 # SPDX-FileCopyrightText: (c) 2022 Artёm IG <github.com/rtmigo>
 # SPDX-License-Identifier: MIT
-
-from typing import List, Iterable
+from typing import List
 
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-
-class _Array2D:
-    @staticmethod
-    def sort_by_first_row(matrix: np.ndarray) -> np.ndarray:
-        return matrix[:, matrix[0, :].argsort()]
-
-    @staticmethod
-    def reverse_rows(matrix: np.ndarray) -> np.ndarray:
-        return matrix[:, ::-1]
+from skifts._array2d import Array2D
 
 
 class SkiFts:
@@ -31,14 +22,13 @@ class SkiFts:
             preprocessor=lambda x: x)
         self._docs_tfidf = self._vectorizer.fit_transform(corpus)
 
-    def search(self, query: List[str]) -> Iterable[int]:
+    def search(self, query: List[str]) -> List[int]:
         """Finds all documents containing at least one word from `query`.
         Returns list of indexes of these documents, starting from most
         relevant."""
 
-        if len(query)<=0:
+        if len(query) <= 0:
             raise ValueError
-        print(query, len(query))
 
         query_tfidf = self._vectorizer.transform([query])
         scores = cosine_similarity(query_tfidf, self._docs_tfidf).flatten()
@@ -62,16 +52,15 @@ class SkiFts:
         # обеих строк будут перемещаться. В итоге в первой будет возрастающий
         # список релевантностей, а во второй переупорядоченные индексы
         # документов
-        matrix = _Array2D.sort_by_first_row(matrix)
+        matrix = Array2D.sort_by_first_row(matrix)
 
         # Переворачиваем массив наоборот, чтобы значения релевантности шли
         # от больших к меньшим, а нули (нерелевантные документы) в конце
-        matrix = _Array2D.reverse_rows(matrix)
+        matrix = Array2D.reverse_rows(matrix)
 
-        for score, doc_idx in matrix.transpose():
-            if score <= 0:
-                # значения score убывают - дальше будут только нули.
-                # Может эффективне было удалить нули на уровне numpy? Не уверен
-                assert score == 0
-                break
-            yield int(doc_idx)
+        # Если в первой строке ноль, значит документ не релевантен: не совпало
+        # ни одно слово. Удаляем такие колонки из матрицы
+        matrix = Array2D.keep_columns_with_nonzero_first_row(matrix)
+
+        # возвращаем вторую строку (в которой индексы документов)
+        return matrix[1].astype(int)
