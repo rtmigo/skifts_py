@@ -3,7 +3,6 @@
 
 import re
 import unittest
-
 from typing import List
 
 from skifts._npfts import SkiFts
@@ -58,8 +57,10 @@ _mr_postman = """
 def _words(text: str) -> List[str]:
     return [w.lower() for w in re.findall(r'\w+', text)]
 
+
 def _postman_corpus():
     return [_words(line) for line in _mr_postman.splitlines()]
+
 
 class TestFts(unittest.TestCase):
 
@@ -70,7 +71,6 @@ class TestFts(unittest.TestCase):
         corpus = _postman_corpus()
 
         db = self.createFts(corpus)
-
 
         def idx_to_doc(idx):
             return corpus[idx]
@@ -99,78 +99,69 @@ class TestFts(unittest.TestCase):
             ['wait', 'mister', 'postman'])
 
         self.assertEqual(
-             len(list(db.search(['jabberwocky']))), 0)
+            len(list(db.search(['jabberwocky']))), 0)
 
-    @unittest.skip
     def test_empty_query(self):
-        db = self.createFts()
-        for doc in [
-            [2, 3],
-            [1, 2, 3],
-            [1, 3, 4, 2]
-        ]:
-            db.add(doc_id=str(doc), words=doc)
+        db = self.createFts([
+            ['2', '3'],
+            ['1', '2', '3'],
+            ['1', '3', '4', '2']
+        ])
 
-        db.search([1])  # no problem
+        list(db.search(['1']))  # no problem
         with self.assertRaises(ValueError):
-            db.search([])
+            list(db.search([]))
 
-    @unittest.skip
     def test_nums(self):
+        corpus = [
+            ['2', '3'],
+            ['1', '2', '3'],
+            ['1', '3', '4', '2']
+        ]
 
-        db = self.createFts()
-        for doc in [
-            [2, 3],
-            [1, 2, 3],
-            [1, 3, 4, 2]
-        ]:
-            db.add(doc_id=str(doc), words=doc)
+        db = self.createFts(corpus)
 
         # при поиске единицы найдем самую короткую последовательность
         # с ней
-        r = db.search([1])
+        r = list(db.search(['1']))
         self.assertEqual(len(r), 2)
-        self.assertEqual(r[0], '[1, 2, 3]', )
+        self.assertEqual(corpus[r[0]], ['1', '2', '3'])
 
         # числа [2, 3] есть в каждой из последовательностей.
         # Короткие будут первыми
-        q = [2, 3]
-        r = db.search(q)
+        q = ['2', '3']
+        r = list(db.search(q))
         self.assertEqual(len(r), 3)
-        self.assertEqual(r[0], '[2, 3]')
-        self.assertEqual(r[1], '[1, 2, 3]')
+        self.assertEqual(corpus[r[0]], ['2', '3'])
+        self.assertEqual(corpus[r[1]], ['1', '2', '3'])
 
         # число 4 в сочетании с 1 есть только в одной последовательности.
         # Она будет первой
-        q = [4, 1]
-        r = db.search(q)
+        q = ['4', '1']
+        r = list(db.search(q))
         self.assertEqual(len(r), 2)
-        self.assertEqual(r[0], '[1, 3, 4, 2]')
-        self.assertEqual(r[1], '[1, 2, 3]')
+        self.assertEqual(corpus[r[0]], ['1', '3', '4', '2'])
+        self.assertEqual(corpus[r[1]], ['1', '2', '3'])
 
-    @unittest.skip
     def test_number_of_matched_words(self):
+        corpus = [
+            ['1', '2', '3'],
+            ['3', '2', '1'],
+            ['2', '3', '5'],  # !
+            ['2', '3', '1'],
+            ['1', '3', '2'],
+        ]
 
-        db = self.createFts()
-        for doc in [
-            [1, 2, 3],
-            [3, 2, 1],
-            [2, 3, 5],  # !
-            [2, 3, 1],
-            [1, 3, 2],
+        db = self.createFts(corpus)
 
-        ]:
-            db.add(doc_id=str(doc), words=doc)
+        q = ['1', '2', '3', '5']
 
-        q = [1, 2, 3, 5]
-
-        r = db.search(q)
+        r = list(db.search(q))
         # всего два совпадения, но приоритетное слово
-        self.assertEqual(r[0], '[2, 3, 5]')
+        self.assertEqual(corpus[r[0]], ['2', '3', '5'])
 
     @unittest.skip
     def test_word_popularity(self):
-
         db = self.createFts()
         for doc in [
             [1, 2],

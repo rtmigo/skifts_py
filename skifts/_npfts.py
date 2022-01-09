@@ -36,6 +36,10 @@ class SkiFts:
         Returns list of indexes of these documents, starting from most
         relevant."""
 
+        if len(query)<=0:
+            raise ValueError
+        print(query, len(query))
+
         query_tfidf = self._vectorizer.transform([query])
         scores = cosine_similarity(query_tfidf, self._docs_tfidf).flatten()
         assert self._docs_count == scores.shape[0]
