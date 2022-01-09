@@ -7,7 +7,7 @@ For example:
 ```python3
 query = ['A', 'B']
 
-elements = [
+documents = [
     ['N', 'A', 'M'],  # common features: 'A'
     ['C', 'B', 'A'],  # common features: 'A', 'B'  
     ['X', 'Y']  # no common features
@@ -30,18 +30,18 @@ Finding documents that contain words from the query.
 ```python3
 from skifts import SkiFts
 
-# three documents:
-corpus = [
+# three documents, one per row
+documents = [
     ["wait", "mister", "postman"],
     ["please", "mister", "postman", "look", "and", "see"],
     ["oh", "yes", "wait", "a", "minute", "mister", "postman"]
 ] 
 
-fts = SkiFts(corpus)
+fts = SkiFts(documents)
 
 # find and print the most relevant documents:
 for doc_index in fts.search(['postman', 'wait']):
-    print(corpus[doc_index])
+    print(documents[doc_index])
 ```
 
 ## Implementation details
