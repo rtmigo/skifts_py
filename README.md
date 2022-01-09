@@ -48,6 +48,9 @@ for doc_index in fts.search(['postman', 'wait']):
 Words inside the `documents` list are considered ready-made feature identifiers.
 If your text needs preprocessing or stemming, this should be done separately.
 
+The ranking takes into account the frequency of words in the document and the
+rarity of words in the corpus. The word order in the document and the distance
+between words do not matter.
 
 ## Implementation details
 
