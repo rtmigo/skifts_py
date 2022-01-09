@@ -43,3 +43,9 @@ fts = SkiFts(corpus)
 for doc_index in fts.search(['postman', 'wait']):
     print(corpus[doc_index])
 ```
+
+## Implementation details
+
+The search uses the [scikit-learn](https://scikit-learn.org) library, which 
+ranks documents using [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) and
+[cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity).
