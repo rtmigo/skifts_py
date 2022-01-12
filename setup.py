@@ -19,7 +19,7 @@ setup(
     version='0.1.0',
     author="Artёm IG",
     author_email="ortemeo@gmail.com",
-    url='https://github.com/rtmigo/gifts_py#readme',
+    url='https://github.com/rtmigo/skifts_py#readme',
 
     python_requires='>=3.6',
     install_requires=["scikit-learn"],
@@ -28,7 +28,8 @@ setup(
     description="Search for the most relevant documents containing words "
                 "from a query",
 
-    keywords="".split(),
+    keywords="information-retrieval text-mining numpy "
+             "tf-idf cosine-similarity".split(),
 
     long_description=(Path(__file__).parent / 'README.md').read_text(),
     long_description_content_type='text/markdown',
