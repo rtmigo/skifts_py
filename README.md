@@ -3,20 +3,24 @@
 
 # [skifts](https://github.com/rtmigo/skifts_py#readme)
 
-Searches for the most relevant documents containing words from a query.
+Search for the most relevant documents containing words from the query.
 
 ```python3
 query = ['A', 'B']
 
 documents = [
-    ['N', 'A', 'M'],  # common features: 'A'
-    ['C', 'B', 'A'],  # common features: 'A', 'B'  
-    ['X', 'Y']  # no common features
+    ['N', 'A', 'M'],  # matching features: 'A'
+    ['C', 'B', 'A'],  # matching features: 'A', 'B'  
+    ['X', 'Y']  # no matching features
 ]
 ```
 
-In this case, the search with return `['C', 'B', 'A']` and `['N', 'A',
-'M']` in that particular order.
+The search with return `['C', 'B', 'A']` and `['N', 'A', 'M']` in that
+particular order.
+
+It's not necessarily about text. Words are just any `str` instances. Documents
+are unordered collections of these `str`. We search for documents considering
+frequency, rarity and match accuracy.
 
 ## Install
 
@@ -61,4 +65,4 @@ ranks documents using [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) and
 ## See also
 
 The [gifts](https://github.com/rtmigo/gifts_py#readme) package implements the
-same algorithm, but in pure Python with no binary dependencies.
+same search, but in pure Python with no binary dependencies.
