@@ -19,7 +19,7 @@ setup(
     version='0.1.0',
     author="Artёm IG",
     author_email="ortemeo@gmail.com",
-    url='https://github.com/rtmigo/gifts_py#readme',
+    url='https://github.com/rtmigo/skifts_py#readme',
 
     python_requires='>=3.6',
     install_requires=["scikit-learn"],
@@ -45,4 +45,3 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
     ])
-
