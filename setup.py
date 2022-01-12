@@ -28,7 +28,8 @@ setup(
     description="Search for the most relevant documents containing words "
                 "from a query",
 
-    keywords="".split(),
+    keywords="information-retrieval text-mining numpy "
+             "tf-idf cosine-similarity".split(),
 
     long_description=(Path(__file__).parent / 'README.md').read_text(),
     long_description_content_type='text/markdown',
