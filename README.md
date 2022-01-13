@@ -1,3 +1,4 @@
+[![PyPI version shields.io](https://img.shields.io/pypi/v/skifts.svg)](https://pypi.python.org/pypi/skifts/)
 [![Generic badge](https://img.shields.io/badge/Python-3.6+-blue.svg)](#)
 [![Generic badge](https://img.shields.io/badge/OS-Linux%20|%20macOS%20|%20Windows-blue.svg)](#)
 
@@ -25,8 +26,18 @@ frequency, rarity and match accuracy.
 ## Install
 
 ```bash
+pip3 install skifts
+```
+
+
+<details>
+  <summary>Other options</summary>
+
+### From GitHub (staging branch)
+```bash
 pip3 install git+https://github.com/rtmigo/skifts_py#egg=skifts
 ```
+</details>
 
 ## Use for full-text search
 
