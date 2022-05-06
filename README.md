@@ -77,3 +77,4 @@ ranks documents using [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) and
 
 The [gifts](https://github.com/rtmigo/gifts_py#readme) package implements the
 same search, but in pure Python with no binary dependencies.
+
